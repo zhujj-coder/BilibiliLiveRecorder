@@ -33,7 +33,7 @@ public class RoomDealerYY extends RoomDealer {
 		roomInfo.setShortId(shortId);
 		try {
 			// 获取基础信息
-			String basicInfoUrl = String.format("http://www.yy.com/%s/%s", shortId, shortId);
+			String basicInfoUrl = String.format("https://www.yy.com/%s/%s", shortId, shortId);
 			String html = util.getContent(basicInfoUrl, headers.getCommonHeaders("www.yy.com"), null);
 			// Logger.println(html);
 			Pattern pJson = Pattern.compile("var pageInfo = *(.*?});");
@@ -59,20 +59,20 @@ public class RoomDealerYY extends RoomDealer {
 				Logger.println(matcher.group(1));
 				JSONObject livingStream = new JSONObject(matcher.group(1));
 				// livingStream.avp_payload.stream_names[0]
-				String currentQN = livingStream.getJSONObject("avp_payload").getJSONArray("stream_names").getString(0);
+//				String currentQN = livingStream.getJSONObject("avp_payload").getJSONArray("stream_names").getString(0);
 				// livingStream.channel_stream_info.streams[2].stream_name
 				// livingStream.channel_stream_info.streams[2].json  --> .gear_info.name
-				JSONArray streams = livingStream.getJSONObject("channel_stream_info").getJSONArray("streams");
-				for(int i=0; i<streams.length(); i++) {
-					if(currentQN.equals(streams.getJSONObject(i).getString("stream_name"))) {
-						JSONObject temp = new JSONObject(streams.getJSONObject(i).getString("json"));
-						String[] qn = {"0"};
-						roomInfo.setAcceptQuality(qn);
-						roomInfo.setAcceptQualityDesc(
-								new String[]{temp.getJSONObject("gear_info").getString("name")});
-						break;
-					}
-				}
+//				JSONArray streams = livingStream.getJSONObject("channel_stream_info").getJSONArray("streams");
+//				for(int i=0; i<streams.length(); i++) {
+//					if(currentQN.equals(streams.getJSONObject(i).getString("stream_name"))) {
+//						JSONObject temp = new JSONObject(streams.getJSONObject(i).getString("json"));
+//						String[] qn = {"0"};
+//						roomInfo.setAcceptQuality(qn);
+//						roomInfo.setAcceptQualityDesc(
+//								new String[]{temp.getJSONObject("gear_info").getString("name")});
+//						break;
+//					}
+//				}
 			}
 			roomInfo.print();
 		} catch (Exception e) {
@@ -86,9 +86,9 @@ public class RoomDealerYY extends RoomDealer {
 	public String getLiveUrl(String shortId, String qn, Object... obj) {
 		try {
 			// 获取基础信息
-			String basicInfoUrl = String.format("http://www.yy.com/%s/%s", shortId, shortId);
+			String basicInfoUrl = String.format("https://www.yy.com/%s/%s", shortId, shortId);
 			String html = util.getContent(basicInfoUrl, headers.getCommonHeaders("www.yy.com"), null);
-			// Logger.println(html);
+			 Logger.println(html);
 			Pattern pJson = Pattern.compile("var livingStream = *(.*?});");
 			Matcher matcher = pJson.matcher(html);
 			matcher.find();
@@ -101,7 +101,7 @@ public class RoomDealerYY extends RoomDealer {
 //			Logger.println(args[0]);
 			
 			String decodedStr = new String(Base64.getDecoder().decode(args[0]));
-			sb.append(decodedStr.substring(decodedStr.indexOf("http")));
+			sb.append(decodedStr.substring(decodedStr.indexOf("https")));
 			for(int i=1; i<args.length; i++) {
 				decodedStr = new String(Base64.getDecoder().decode(args[i]));
 				if(decodedStr.matches("^[0-9a-zA-Z\\:\\.\\?\\/\\-=_&%]+$")) {

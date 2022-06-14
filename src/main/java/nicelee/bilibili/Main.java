@@ -11,6 +11,7 @@ import nicelee.bilibili.plugin.Plugin;
 import nicelee.bilibili.threads.ThCommand;
 import nicelee.bilibili.threads.ThMonitor;
 import nicelee.bilibili.threads.ThRecord;
+import nicelee.bilibili.util.Logger;
 
 public class Main {
 
@@ -31,7 +32,7 @@ public class Main {
 //				"plugin=true&debug=false&check=true&retryAfterMinutes=0.5&retryIfLiveOff=true&liver=douyu&qnPri=蓝光4M>高清>蓝光8M>超清>蓝光>流畅&qn=-1&id=262537&fileName=测试{liver}-{name}-{startTime}-{endTime}-{seq}&" }; // 清晰度全部可选，但部分高清需要cookie
 //		args = new String[] { "debug=true&check=true&liver=kuaishou&id=3xh62hmw79fmc32&qn=0&delete=false&fileName=测试{liver}-{name}-{startTime}-{endTime}-{seq}&timeFormat=yyyyMMddHHmm" }; // 清晰度全部可选，可不需要cookie
 //		args = new String[]{"debug=true&check=true&liver=huya&id=11342412"}; 				// 清晰度全部可选，可不需要cookie 
-//		args = new String[]{"debug=true&check=true&liver=yy&id=28581146&qn=1"}; 		// 只支持默认清晰度 54880976
+//		args = new String[]{"debug=true&check=true&liver=yy&id=10299121&qn=1"}; 		// 只支持默认清晰度 54880976
 //		args = new String[] { "debug=true&check=true&liver=zhanqi&id=90god" }; 			// 清晰度全部可选，可不需要cookie 90god huashan ydjs
 //		args = new String[] { "debug=true&check=true&liver=huajiao&id=278581432&qn=1" }; // 只支持默认清晰度(似乎只有一种清晰度)
 //		args = new String[] { "debug=true&check=true&liver=acfun&id=378269" };
@@ -39,7 +40,7 @@ public class Main {
 //		args = new String[]{"debug=true&liver=douyin&id=448984890564&delete=false&check=false"};  			// 清晰度全部可选，可不需要cookie 
 //		args = new String[]{"debug=true&liver=douyin&id=https://v.douyin.com/EQBYoH&delete=false&check=false"};  			// 清晰度全部可选，可不需要cookie 
 //		args = new String[] { "debug=true&liver=douyin_web&id=https://v.douyin.com/EQBYoH&delete=false&check=false" }; // 清晰度全部可选，可不需要cookie
-//		args = new String[]{"debug=true&liver=douyin_web&id=227807351025&delete=false&check=false"};  			// 清晰度全部可选，可不需要cookie 
+		args = new String[]{"debug=true&liver=douyin&id=https://v.douyin.com/FtNXdUV/&delete=false&check=false&qn=0&plugin=true"};  			// 清晰度全部可选，可不需要cookie
 
 		final Plugin plugin = new Plugin();
 		if (args != null && args[0].contains("plugin=true")) {
@@ -75,7 +76,7 @@ public class Main {
 			BufferedReader buReader = new BufferedReader(new FileReader(Config.liver + "-cookie.txt"));
 			cookie = buReader.readLine();
 			buReader.close();
-			// Logger.println(cookie);
+			Logger.println(cookie);
 		} catch (Exception e) {
 		}
 		RoomDealer roomDealer = getRoomDealer(Config.liver);
@@ -112,18 +113,18 @@ public class Main {
 			Config.qn = reader.readLine();
 		}
 		// 检查清晰度的合法性
-		boolean qnIsValid = false;
-		String validQN[] = roomInfo.getAcceptQuality();
-		for (int i = 0; i < validQN.length; i++) {
-			if (validQN[i].equals(Config.qn)) {
-				qnIsValid = true;
-				break;
-			}
-		}
-		if (!qnIsValid) {
-			System.err.println("输入的qn值不在当前可获取清晰度列表中");
-			System.exit(-1);
-		}
+//		boolean qnIsValid = false;
+//		String validQN[] = roomInfo.getAcceptQuality();
+//		for (int i = 0; i < validQN.length; i++) {
+//			if (validQN[i].equals(Config.qn)) {
+//				qnIsValid = true;
+//				break;
+//			}
+//		}
+//		if (!qnIsValid) {
+//			System.err.println("输入的qn值不在当前可获取清晰度列表中");
+//			System.exit(-1);
+//		}
 		// String url = roomDealer.getLiveUrl(roomInfo.getRoomId(),
 		// roomInfo.getAcceptQuality()[0]);
 

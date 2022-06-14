@@ -1,9 +1,12 @@
 package nicelee.bilibili.live.impl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,6 +66,14 @@ public class RoomDealerDouyin4User extends RoomDealer {
 					conn.setRequestProperty("User-Agent",
 							"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0");
 					conn.connect();
+//					BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//					String line;
+//					StringBuilder sb = new StringBuilder();
+//					while ((line=bufferedReader.readLine())!=null){
+//						line=new String(line.getBytes(StandardCharsets.UTF_8));
+//						sb.append(line);
+//					}
+					Logger.println(conn.getHeaderFields());
 					location = conn.getHeaderField("Location");
 					Logger.println(location);
 				}
